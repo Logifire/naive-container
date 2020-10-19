@@ -1,4 +1,5 @@
 <?php
+
 namespace NanoContainer;
 
 use NanoContainer\Exceptions\ContainerException;
@@ -30,7 +31,8 @@ class Container extends ContainerDecorator implements ContainerInterface
         if (is_callable($this->container_stack[$id])) {
             // Performance optimization, isset returns false on null values, but is faster
             // https://stackoverflow.com/a/9522522/10604655
-            if (!isset($this->instances[$id]) && !array_key_exists($id, $this->instances)) {
+            if (!isset($this->instances[$id]) && !array_key_exists($id,
+                    $this->instances)) {
 
                 if (isset($this->call_stack[$id])) {
                     throw new ContainerException("Circular dependency detected when calling {$id}");
@@ -39,7 +41,8 @@ class Container extends ContainerDecorator implements ContainerInterface
                 $this->call_stack[$id] = true;
 
                 try {
-                    $this->instances[$id] = call_user_func($this->container_stack[$id], $this);
+                    $this->instances[$id] = call_user_func($this->container_stack[$id],
+                        $this);
                 } catch (Exception $e) {
                     throw new ContainerException($e->getMessage() . " - Tried to call {$id}");
                 }
@@ -55,6 +58,7 @@ class Container extends ContainerDecorator implements ContainerInterface
 
     public function has($id): bool
     {
-        return (isset($this->container_stack[$id]) || array_key_exists($id, $this->container_stack));
+        return (isset($this->container_stack[$id]) || array_key_exists($id,
+                $this->container_stack));
     }
 }

@@ -17,7 +17,8 @@ class TestProvider implements FactoryProvider
     {
         $factory->set(self::PROVIDER_VALUE, self::EXPECTED_VALUE);
 
-        $factory->register(self::PROVIDER_SERVICE, function(Container $container) {
+        $factory->register(self::PROVIDER_SERVICE,
+            function(Container $container) {
             return $container->get(self::PROVIDER_VALUE);
         });
     }

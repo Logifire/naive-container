@@ -1,4 +1,5 @@
 <?php
+
 namespace NanoContainer;
 
 use Closure;
